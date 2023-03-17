@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gsoc_requirement/pages/second_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Gsoc Requirement'),
     );
   }
 }
@@ -29,31 +30,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
+  bool data = false;
+  bool text = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Container(
-        /*decoration: const BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            fit: BoxFit.fill,
-            image: AssetImage('assets/LIQUIDGALAXYLOGO.png'),
+            fit: BoxFit.scaleDown,
+            image: AssetImage(
+                'assets/LOGO_LIQUID_GALAXY-sq300x300-pngtranspOK.png'),
           ),
-        ),*/
+        ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Flexible(
               flex: 1,
               child: Column(
                 children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('button'),
-                  ),
                   const Flexible(
                     flex: 1,
                     child: SizedBox(
@@ -61,8 +67,48 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.blue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SecondPage(),
+                        ),
+                      );
+                    },
+                    child: const Text('button 1'),
+                  ),
+                  const Flexible(
+                    flex: 6,
+                    child: SizedBox(
+                      height: double.infinity,
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.purple),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                      ),
+                    ),
                     onPressed: () {},
-                    child: const Text('button'),
+                    child: const Text('button 3'),
+                  ),
+                  const Flexible(
+                    flex: 1,
+                    child: SizedBox(
+                      height: double.infinity,
+                    ),
                   ),
                 ],
               ),
@@ -77,10 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
               flex: 1,
               child: Column(
                 children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('button'),
-                  ),
                   const Flexible(
                     flex: 1,
                     child: SizedBox(
@@ -88,8 +130,59 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('button'),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.red),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        text = true;
+                      });
+                    },
+                    child: const Text('button 2'),
+                  ),
+                  if (text) ...[
+                    const Text(
+                      'you pressed the button!',
+                      textAlign: TextAlign.center,
+                    ),
+                  ] else ...[
+                    const Text('')
+                  ],
+                  const Flexible(
+                    flex: 6,
+                    child: SizedBox(
+                      height: double.infinity,
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.green),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        data = false;
+                        text = false;
+                      });
+                    },
+                    child: const Text('button 4'),
+                  ),
+                  const Flexible(
+                    flex: 1,
+                    child: SizedBox(
+                      height: double.infinity,
+                    ),
                   ),
                 ],
               ),
