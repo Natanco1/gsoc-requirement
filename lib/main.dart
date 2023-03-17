@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gsoc_requirement/pages/second_page.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +23,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
+Future<String> _getFact() async {
+  var response = await http.get(
+    Uri.parse('https://catfact.ninja/fact'),
+  );
+  var decoded = jsonDecode(response.body)['fact'];
+  return decoded;
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -30,12 +41,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
   bool data = false;
   bool text = false;
+  String fact = '';
 
   @override
   void initState() {
+    data = false;
+    text = false;
+    fact = '';
     super.initState();
   }
 
@@ -101,9 +115,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var response = await _getFact();
+                      setState(() {
+                        fact = response;
+                        data = true;
+                      });
+                    },
                     child: const Text('button 3'),
                   ),
+                  if (data) ...[
+                    Text(
+                      fact,
+                      textAlign: TextAlign.center,
+                    ),
+                  ] else ...[
+                    SizedBox.shrink()
+                  ],
                   const Flexible(
                     flex: 1,
                     child: SizedBox(
@@ -152,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       textAlign: TextAlign.center,
                     ),
                   ] else ...[
-                    const Text('')
+                    SizedBox.shrink()
                   ],
                   const Flexible(
                     flex: 6,
